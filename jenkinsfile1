@@ -1,7 +1,7 @@
 try {
   node("maven") {
     stage("Checkout") {
-    git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
+    echo "Checkout"
   } 
 } 
   catch (err) {
