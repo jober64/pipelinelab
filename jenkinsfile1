@@ -1,0 +1,12 @@
+try {
+  node("maven") {
+    stage("Checkout") {
+    git url: "${GIT_SOURCE_URL}", branch: "${GIT_SOURCE_REF}"
+  } 
+} 
+  catch (err) {
+    echo "in catch block"
+    echo "Caught: ${err}"
+    currentBuild.result = 'FAILURE'
+    throw err
+}
