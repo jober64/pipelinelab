@@ -1,8 +1,14 @@
 try {
   node("maven") {
+  
     stage("Checkout") {
     echo "Checkout"
     }
+    
+    stage("Error") {
+    sh "ddd"
+    }
+    
   } 
 } 
   catch (err) {
