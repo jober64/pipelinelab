@@ -2,6 +2,7 @@ try {
   node("maven") {
     stage("Checkout") {
     echo "Checkout"
+    }
   } 
 } 
   catch (err) {
