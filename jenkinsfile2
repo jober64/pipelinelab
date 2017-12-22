@@ -1,1 +1,45 @@
-.
+timestamps {
+        def nameSpace = 'pipeline-lab'
+        // def buildConfig = 'jhpverify'
+        // def builderImageConfig = 'jhp-lib-dev'
+        //def seleniumProject = 'p-jhp_demo_selenium_test'
+        // def appProject = 'jhpdemo'
+        // def gitRepo = 'https://github.sebank.se/JADE/jhpdemo-liberty.git'
+        // def warApp='jhpdemo.war'
+        // def branchName = '*/dev'
+ 
+        node("jhp-build-slave") {
+               try{
+                     stage ('Checkout JHPDEMO'){
+                     echo "Hello"
+                         }
+ 
+               } catch (e) {
+                       // If there was an exception thrown, the build failed
+ 
+                       // currentBuild.result = "FAILURE"
+                       // archiveArtifacts seleniumProject+'/output/test-output/html/'
+                       // archiveArtifacts seleniumProject+'/output/screenshots/*.png'
+                       // notifyBuild(currentBuild.result)
+                       throw e
+               } finally {
+               // Success or failure, always send notifications
+                      
+                       //notifyBuild(currentBuild.result,recipientProviders)
+            }
+    }
+}
+def notifyBuild(String buildStatus) {
+        // build status of null means successful
+        buildStatus =  buildStatus ?: 'SUCCESSFUL'
+        def subject = "JENKINS-NOTIFICATION: ${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+        // Send notifications
+        emailext (
+        from : "jenkins@test.se",
+        subject: subject,
+        mimeType: 'text/html',
+        body: '''${SCRIPT, template="groovy-html.template"}''',
+        recipients: "jenkins@test.se"
+    //recipientProviders: [[$class: 'CulpritsRecipientProvider'], [$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider'], [$class: 'UpstreamComitterRecipientProvider']]
+        )
+}
