@@ -8,7 +8,7 @@ timestamps {
         // def warApp='jhpdemo.war'
         // def branchName = '*/dev'
  
-        node("jhp-build-slave") {
+        node("maven") {
                try{
                      stage ('Checkout JHPDEMO'){
                      echo "Hello"
